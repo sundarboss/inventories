@@ -6,17 +6,23 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
 
-const CategoryCard = ({ id, name, heading, fields, onAddCategoryField, onUpdateCategoryField, onRemoveCategory }) => {
+const CategoryCard = ({ id, name, heading, fields, onAddCategoryField, onUpdateCategoryField, onRemoveCategory, onRemoveCategoryField }) => {
 
     const onCategoryValuesChange = (e, id, fieldType) => {
         onUpdateCategoryField(id, fieldType, e.target.value);
     }
 
     const onFieldValuesChange = (e, fieldId, fieldType, id) => {
-        const index = fields.findIndex((field) => field.id === fieldId);
-        const newFields = [...fields];
-        newFields[index][fieldType] = e.target.value;
-        onAddCategoryField(newFields, id);
+        if (fieldType === 'type' && e.target.value === 'remove') {
+            onRemoveCategoryField(id, fieldId, name);
+        } else {
+            const index = fields.findIndex((field) => field.id === fieldId);
+            const newFields = [...fields];
+            newFields[index][fieldType] = e.target.value;
+            const newField = newFields[index];
+            newField.value = '';
+            onAddCategoryField(newFields, id, newField, name);
+        }
     }
 
     const onAddFieldClick = (e, type, id) => {
@@ -29,7 +35,8 @@ const CategoryCard = ({ id, name, heading, fields, onAddCategoryField, onUpdateC
             type
         };
         newFields.push(newField);
-        onAddCategoryField(newFields, id);
+        newField.value = '';
+        onAddCategoryField(newFields, id, newField, name);
     }
 
     return (
@@ -64,6 +71,7 @@ const CategoryCard = ({ id, name, heading, fields, onAddCategoryField, onUpdateC
                                         <option value="text">Text</option>
                                         <option value="number">Number</option>
                                         <option value="date">Date</option>
+                                        <option value="remove">Remove</option>
                                     </Form.Select>
                                 </InputGroup>
                             )

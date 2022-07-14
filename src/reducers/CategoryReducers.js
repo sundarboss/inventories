@@ -1,4 +1,4 @@
-import { ADD_CATEGORY, ADD_CATEGORY_FIELD, UPDATE_CATEGORY_VALUE, REMOVE_CATEGORY } from "../constants";
+import { ADD_CATEGORY, ADD_CATEGORY_FIELD, UPDATE_CATEGORY_VALUE, REMOVE_CATEGORY, REMOVE_CATEGORY_FIELD } from "../constants";
 
 const initialState = {
     categories: []
@@ -30,6 +30,16 @@ export const categoryReducers = (state=initialState, action={}) => {
                 ...state,
                 categories: filteredCategories
             };
+        case REMOVE_CATEGORY_FIELD:
+            const removeIndex = state.categories.findIndex((category) => category.id === action.payload.id);
+            const updatedArray = [...state.categories];
+            const updatedFields = [...updatedArray[removeIndex].fields];
+            const filteredFields = updatedFields.filter((field) => field.id !== action.payload.fieldId);
+            updatedArray[removeIndex].fields = filteredFields;
+            return {
+                ...state,
+                categories: updatedArray
+            }
         default:
             return state;
     }

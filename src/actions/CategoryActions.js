@@ -1,4 +1,4 @@
-import { ADD_CATEGORY, ADD_CATEGORY_FIELD, UPDATE_CATEGORY_VALUE, REMOVE_CATEGORY } from "../constants";
+import { ADD_CATEGORY, ADD_CATEGORY_FIELD, UPDATE_CATEGORY_VALUE, REMOVE_CATEGORY, REMOVE_CATEGORY_FIELD } from "../constants";
 
 export const addCategoryAction = (category) => {
     return {
@@ -34,6 +34,17 @@ export const removeCategoryAction = (id, name) => {
         payload: {
             id,
             name
+        }
+    }
+}
+
+export const removeCategoryFieldAction = (id, fieldId, catName) => {
+    return {
+        type: REMOVE_CATEGORY_FIELD,
+        payload: {
+            id,
+            fieldId,
+            catName
         }
     }
 }
