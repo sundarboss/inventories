@@ -2,23 +2,27 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
+import Button from 'react-bootstrap/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import ItemCard from '../components/ItemCard';
 import { addItemAction, updateItemAction, removeItemAction } from '../actions/ItemActions';
+import { useParams } from 'react-router-dom';
 
-const Home = () => {
+const Random = () => {
+    const { category } = useParams();
+
     const dispatch = useDispatch();
 
     const categories = useSelector((state) => state.categories);
 
     const items = useSelector((state) => state.items);
 
-    const onAddItem = (e, catName) => {
+    const filteredItems = items.items.filter((item) => item.type === category)
+
+    const onAddNewItem = (e) => {
         e.preventDefault();
-        const selectedCategory = categories.categories.find((category) => category.name === catName);
+        const selectedCategory = categories.categories.find((cat) => cat.name === category);
 
         const newItemFields = selectedCategory.fields.map((field) => {
             const newField = {};
@@ -37,7 +41,7 @@ const Home = () => {
         };
 
         dispatch(addItemAction(newItem));
-    }
+    } 
 
     const onUpdateItemField = (id, fieldName, fieldValue) => {
         dispatch(updateItemAction(id, fieldName, fieldValue));
@@ -47,8 +51,8 @@ const Home = () => {
         dispatch(removeItemAction(id));
     }
 
-    const renderItems = items.items.length > 0 ? (
-        items.items.map((item) => {
+    const renderItems = filteredItems.length > 0 ? (
+        filteredItems.map((item) => {
             return (
                 <Col md={4} className='column' key={item.id}>
                     <ItemCard 
@@ -69,17 +73,11 @@ const Home = () => {
             <Row className='show-grid'>
                 {renderItems}
                 <Col md={4} className='column'>
-                    <DropdownButton className='dropdown' id="dropdown-item-button" title="Add Item" variant='secondary'>
-                        {categories.categories.map((category) => {
-                            return (
-                                <Dropdown.Item key={category.id} as="button" onClick={(e) => onAddItem(e, category.name)}>{category.name}</Dropdown.Item>
-                            )
-                        })}
-                    </DropdownButton>
+                    <Button variant='secondary' style={{ width: '100%' }} onClick={onAddNewItem}>Add Item {category}</Button>
                 </Col>
             </Row>
         </Container>
     )
 }
 
-export default Home;
+export default Random;

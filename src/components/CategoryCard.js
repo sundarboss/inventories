@@ -6,7 +6,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 
 
-const CategoryCard = ({ id, name, heading, fields, onAddCategoryField, onUpdateCategoryField }) => {
+const CategoryCard = ({ id, name, heading, fields, onAddCategoryField, onUpdateCategoryField, onRemoveCategory }) => {
 
     const onCategoryValuesChange = (e, id, fieldType) => {
         onUpdateCategoryField(id, fieldType, e.target.value);
@@ -33,27 +33,28 @@ const CategoryCard = ({ id, name, heading, fields, onAddCategoryField, onUpdateC
     }
 
     return (
-        <Card>
-            <Card.Header>
-                {name}
+        <Card className='card'>
+            <Card.Header className='card-header'>
+                <span>{name}</span>
+                <span className='close-icon' onClick={() => onRemoveCategory(id, name)}>x</span>
             </Card.Header>
             <Card.Body>
                 <Form>
-                    <Form.Group>
+                    <Form.Group className='form-group'>
                         <Form.Label>Object Type</Form.Label>
                         <Form.Control type="text" value={name} onChange={(e) => onCategoryValuesChange(e, id, 'name')} />
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group className='form-group'>
                         <Form.Label>Object Title</Form.Label>
                         <Form.Select value={heading} onChange={(e) => onCategoryValuesChange(e, id, 'heading')}>
                             {fields.map((field) => {
                                 return (
-                                    <option value={field.name}>{field.name}</option>
+                                    <option key={field.id} value={field.name}>{field.name}</option>
                                 )
                             })}
                         </Form.Select>
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group className='form-group'>
                         <Form.Label>Fields</Form.Label>
                         {fields.map((field) => {
                             return (
@@ -68,7 +69,7 @@ const CategoryCard = ({ id, name, heading, fields, onAddCategoryField, onUpdateC
                             )
                         })}
                     </Form.Group>
-                    <DropdownButton id="dropdown-item-button" title="Add More Fields" variant='secondary'>
+                    <DropdownButton className='dropdown' id="dropdown-item-button" title="Add More Fields" variant='secondary'>
                         <Dropdown.Item as="button" onClick={(e) => onAddFieldClick(e, 'text', id)}>Text</Dropdown.Item>
                         <Dropdown.Item as="button" onClick={(e) => onAddFieldClick(e, 'number', id)}>Number</Dropdown.Item>
                         <Dropdown.Item as="button" onClick={(e) => onAddFieldClick(e, 'date', id)}>Date</Dropdown.Item>

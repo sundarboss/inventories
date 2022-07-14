@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import CategoryCard from '../components/CategoryCard';
 import { v4 as uuidv4 } from 'uuid';
 import { useSelector, useDispatch } from 'react-redux';
-import { addCategoryAction, addCategoryFieldAction, updateCategoryValueAction } from '../actions/CategoryActions';
+import { addCategoryAction, addCategoryFieldAction, updateCategoryValueAction, removeCategoryAction } from '../actions/CategoryActions';
 
 /*const categories = [
     {
@@ -49,7 +49,6 @@ const Types = () => {
     const dispatch = useDispatch();
 
     const categories = useSelector((state) => state.categories);
-    console.log('categories', categories.categories.length);
 
     const onAddType = () => {
         const newType = {
@@ -76,18 +75,22 @@ const Types = () => {
         dispatch(updateCategoryValueAction(id, fieldType, fieldValue));
     }
 
+    const onRemoveCategory = (id, name) => {
+        dispatch(removeCategoryAction(id, name));
+    }
+
     const rendercategories = categories.categories.length > 0 ? (
         categories.categories.map((category) => {
             return (
-                <Col md={4} className='column'>
+                <Col md={4} className='column' key={category.id}>
                     <CategoryCard
-                        key={category.id}
                         id={category.id}
                         name={category.name}
                         heading={category.heading}
                         fields={category.fields}
                         onAddCategoryField={onAddCategoryField}
                         onUpdateCategoryField={onUpdateCategoryField}
+                        onRemoveCategory={onRemoveCategory}
                     />
                 </Col>
             )

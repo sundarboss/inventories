@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Menubar from './components/Menubar';
 import Home from './pages/Home';
 import Types from './pages/Types';
+import Random from './pages/Random';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/types" element={<Types />} />
+          <Route path="/type/:category" element={<Random />} />
         </Routes>
       </Router>
     </div>
