@@ -13,6 +13,7 @@ const CategoryCard = ({ id, name, heading, fields, onAddCategoryField, onUpdateC
     }
 
     const onFieldValuesChange = (e, fieldId, fieldType, id) => {
+        //Check if the remove option is selected and call the appropriate function to remove that field
         if (fieldType === 'type' && e.target.value === 'remove') {
             onRemoveCategoryField(id, fieldId, name);
         } else {
@@ -66,8 +67,15 @@ const CategoryCard = ({ id, name, heading, fields, onAddCategoryField, onUpdateC
                         {fields.map((field) => {
                             return (
                                 <InputGroup className="mb-3" key={field.id}>
-                                    <Form.Control type="text" value={field.name} onChange={(e) => onFieldValuesChange(e, field.id, 'name', id)} />
-                                    <Form.Select onChange={(e) => onFieldValuesChange(e, field.id, 'type', id)} value={field.type}>
+                                    <Form.Control 
+                                        type="text" 
+                                        value={field.name} 
+                                        onChange={(e) => onFieldValuesChange(e, field.id, 'name', id)} 
+                                    />
+                                    <Form.Select 
+                                        onChange={(e) => onFieldValuesChange(e, field.id, 'type', id)} 
+                                        value={field.type}
+                                    >
                                         <option value="text">Text</option>
                                         <option value="number">Number</option>
                                         <option value="date">Date</option>

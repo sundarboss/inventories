@@ -1,4 +1,10 @@
-import { ADD_CATEGORY, ADD_CATEGORY_FIELD, UPDATE_CATEGORY_VALUE, REMOVE_CATEGORY, REMOVE_CATEGORY_FIELD } from "../constants";
+import { 
+    ADD_CATEGORY, 
+    ADD_CATEGORY_FIELD, 
+    UPDATE_CATEGORY_VALUE, 
+    REMOVE_CATEGORY, 
+    REMOVE_CATEGORY_FIELD 
+} from "../constants";
 
 export const addCategoryAction = (category) => {
     return {

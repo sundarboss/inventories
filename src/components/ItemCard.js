@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 
 const ItemCard = ({ id, type, heading, fields, onUpdateItemField, onRemoveItem }) => {
 
+    //Function to generate the correct Title for an Inventory Item
     const getHeading = (head) => {
         const selectedIndex = fields.findIndex((field) => field.name === head);
         return selectedIndex > -1 ? fields[selectedIndex].value : '';
@@ -29,7 +30,11 @@ const ItemCard = ({ id, type, heading, fields, onUpdateItemField, onRemoveItem }
                         return (
                             <Form.Group key={field.id} className='form-group'>
                                 <Form.Label>{field.name}</Form.Label>
-                                <Form.Control type={field.type} value={field.value} onChange={(e) => onItemValuesChange(e, id, field.name)} />
+                                <Form.Control 
+                                    type={field.type} 
+                                    value={field.value} 
+                                    onChange={(e) => onItemValuesChange(e, id, field.name)} 
+                                />
                             </Form.Group>
                         )
                     })}

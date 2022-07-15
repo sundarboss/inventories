@@ -1,11 +1,12 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { useSelector, useDispatch } from 'react-redux';
+
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import CategoryCard from '../components/CategoryCard';
-import { v4 as uuidv4 } from 'uuid';
-import { useSelector, useDispatch } from 'react-redux';
+
 import { 
     addCategoryAction, 
     addCategoryFieldAction, 
@@ -14,49 +15,15 @@ import {
     removeCategoryFieldAction
 } from '../actions/CategoryActions';
 import { addItemCategoryAction } from '../actions/ItemActions';
+import CategoryCard from '../components/CategoryCard';
 
-/*const categories = [
-    {
-        id: 456,
-        name: 'Bulldozer',
-        heading: 'Title',
-        fields: [
-            {
-                id: 1,
-                name: 'Title',
-                type: 'text'
-            }
-        ]
-    },
-    {
-        id: 567,
-        name: 'Excavator',
-        heading: 'Title',
-        fields: [
-            {
-                id: 1,
-                name: 'Title',
-                type: 'text'
-            },
-            {
-                id: 2,
-                name: 'Brand',
-                type: 'text'
-            },
-            {
-                id: 3,
-                name: 'Capacity',
-                type: 'number'
-            }
-        ]
-    }
-]*/
 
 const Types = () => {
     const dispatch = useDispatch();
 
     const categories = useSelector((state) => state.categories);
 
+    //Function to add a new Inventory type
     const onAddType = () => {
         const newType = {
             id: uuidv4(),
@@ -74,19 +41,23 @@ const Types = () => {
         dispatch(addCategoryAction(newType));
     }
 
+    //Function for adding a new fields for a category type and updating the values for the fields
     const onAddCategoryField = (newFields, id, newField, catName) => {
         dispatch(addCategoryFieldAction(newFields, id));
         dispatch(addItemCategoryAction(newField, catName));
     }
 
+    //Function for updating the values of an inventory type
     const onUpdateCategoryField = (id, fieldType, fieldValue) => {
         dispatch(updateCategoryValueAction(id, fieldType, fieldValue));
     }
 
+    //Function for removing a specific Inventory type
     const onRemoveCategory = (id, name) => {
         dispatch(removeCategoryAction(id, name));
     }
 
+    //Function for removing a specific field under an Inventory type
     const onRemoveCategoryField = (id, fieldId, catName) => {
         dispatch(removeCategoryFieldAction(id, fieldId, catName));
     }
