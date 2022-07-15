@@ -40,7 +40,12 @@ export const itemReducers = (state=initialState, action={}) => {
                         item.fields[fieldIndex].type = action.payload.newField.type;
                         item.fields[fieldIndex].value = '';
                     } else {
-                        item.fields.push(action.payload.newField);
+                        const newField = {};
+                        newField.id = action.payload.newField.id;
+                        newField.name = action.payload.newField.name;
+                        newField.type = action.payload.newField.type;
+                        newField.value = '';
+                        item.fields.push(newField);
                     }
                 }
                 return item;
